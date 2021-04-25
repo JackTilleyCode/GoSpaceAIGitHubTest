@@ -21,5 +21,13 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.PageObjects
         {
             util.InputElementValue(By.Id("login_field"),p0);
         }
+        internal void EnterPassword(string p0)
+        {
+            util.InputElementValue(By.Id("password"), p0);
+        }
+        internal void ClickSignIn()
+        {
+            util.ClickElement(By.XPath("//*[@id='login']/div[4]/form/div/input[12]"));
+        }
     }
 }

@@ -39,13 +39,19 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         [When(@"Enter password as ""(.*)""")]
         public void WhenEnterPasswordAs(string p0)
         {
-            ScenarioContext.Current.Pending();
+            signInPage.EnterPassword(p0);
         }
         
         [Then(@"User should be signed in")]
         public void ThenUserShouldBeSignedIn()
         {
-            ScenarioContext.Current.Pending();
+            //TODO - Sort out credentials
         }
+        [When(@"Click sign in")]
+        public void WhenClickSignIn()
+        {
+            signInPage.ClickSignIn();
+        }
+
     }
 }
