@@ -33,7 +33,7 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         [When(@"Enter username as ""(.*)""")]
         public void WhenEnterUsernameAs(string p0)
         {
-
+            signInPage.EnterUsername(p0);
         }
         
         [When(@"Enter password as ""(.*)""")]
