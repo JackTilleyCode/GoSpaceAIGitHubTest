@@ -14,9 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\" />
-    <Folder Include="PageObjects\" />
-    <Folder Include="StepDefinitions\" />
+    <Folder Include="UITestAutomation\PageObjects\" />
+    <Folder Include="UITestAutomation\StepDefinitions\" />
   </ItemGroup>
 
 </Project>
