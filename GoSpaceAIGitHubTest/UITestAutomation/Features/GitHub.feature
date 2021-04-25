@@ -1,5 +1,5 @@
 ﻿Feature: GitHub
-	Simple calculator for adding two numbers
+	Github functions
 
 Scenario: User Sign In to github
 	Given On sign in page
