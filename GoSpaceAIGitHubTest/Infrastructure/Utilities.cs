@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,7 +39,9 @@ namespace GoSpaceAIGitHubTest.Infrastructure
 
         internal void ClickElement(By by)
         {
-            _driver.FindElement(by).Click();
+            var wait = new WebDriverWait(_driver, TimeSpan.FromMinutes(1));
+            var clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(by));
+            clickableElement.Click(); 
             Debug.Print(TestContext.CurrentContext.Test + ":" + by.ToString() + " -> Click");
         }
 

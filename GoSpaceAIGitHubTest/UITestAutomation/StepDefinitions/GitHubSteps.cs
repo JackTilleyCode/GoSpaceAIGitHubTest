@@ -12,6 +12,7 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
 
         SignInPage signInPage => new SignInPage(_driver);
         HomePage homePage => new HomePage(_driver);
+        NewRepositoryPage newRepositoryPage => new NewRepositoryPage(_driver);
 
         [BeforeScenario]
         public void Init()
@@ -67,7 +68,38 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         public void ThenUserShouldHaveRepositories()
         {
             homePage.ListRepositories();
+
         }
+
+
+        [When(@"Click new")]
+        public void WhenClickNew()
+        {
+            homePage.ClickNew();
+        }
+
+        [When(@"Click create repository")]
+        public void WhenClickCreateRepository()
+        {
+            newRepositoryPage.ClickCreateRepository();
+        }
+
+        [Then(@"Repository should be created")]
+        public void ThenRepositoryShouldBeCreated()
+        {
+            //
+        }
+
+
+
+        [When(@"Enter repository name as ""(.*)"" with key")]
+        public void WhenEnterRepositoryNameAsWithKey(string p0)
+        {
+            newRepositoryPage.EnterRepositoryName(p0);
+        }
+
+
+
 
     }
 }

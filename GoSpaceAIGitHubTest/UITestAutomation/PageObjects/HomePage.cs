@@ -42,5 +42,10 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.PageObjects
         {
             util.AssertElementPresent(By.Id("repos-container"));
         }
+
+        internal void ClickNew()
+        {
+            util.ClickElement(By.XPath("//*[@id='repos-container']/h2/a"));
+        }
     }
 }
