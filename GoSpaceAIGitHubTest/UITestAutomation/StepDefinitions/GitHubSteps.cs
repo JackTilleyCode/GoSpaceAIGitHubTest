@@ -11,6 +11,7 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         private ChromeDriver _driver;
 
         SignInPage signInPage => new SignInPage(_driver);
+        HomePage homePage => new HomePage(_driver);
 
         [BeforeScenario]
         public void Init()
@@ -45,12 +46,27 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         [Then(@"User should be signed in")]
         public void ThenUserShouldBeSignedIn()
         {
-            //TODO - Sort out credentials
+            homePage.AssertOnHomePage();
         }
         [When(@"Click sign in")]
         public void WhenClickSignIn()
         {
             signInPage.ClickSignIn();
+        }
+
+        [Given(@"On home page")]
+        public void GivenOnHomePage()
+        {
+            GivenOnSignInPage();
+            WhenEnterUsernameAs("GoSpaceAIInterview");
+            WhenEnterPasswordAs("GoSpace123");
+            WhenClickSignIn();
+        }
+
+        [Then(@"User should have repositories")]
+        public void ThenUserShouldHaveRepositories()
+        {
+            homePage.ListRepositories();
         }
 
     }
