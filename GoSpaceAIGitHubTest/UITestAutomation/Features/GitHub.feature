@@ -11,3 +11,10 @@ Scenario: User Sign In to github
 Scenario: List repositories
 	Given On home page
 	Then User should have repositories
+
+Scenario: Create repository
+	Given On home page
+	When Click new
+	When Enter repository name as "NewRepo" with key
+	When Click create repository
+	Then Repository should be created

@@ -1,4 +1,5 @@
 ﻿using GoSpaceAIGitHubTest.Infrastructure;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -41,6 +42,11 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.PageObjects
         internal void AssertOnHomePage()
         {
             util.AssertElementPresent(By.Id("repos-container"));
+        }
+
+        internal void ClickNew()
+        {
+            util.ClickElement(By.XPath("//*[@id='repos-container']/h2/a"));
         }
     }
 }
