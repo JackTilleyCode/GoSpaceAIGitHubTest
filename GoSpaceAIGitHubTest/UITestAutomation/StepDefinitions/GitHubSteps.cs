@@ -1,4 +1,5 @@
 ﻿using GoSpaceAIGitHubTest.UITestAutomation.PageObjects;
+using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
 using System;
 using TechTalk.SpecFlow;
@@ -9,9 +10,10 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
     public class GitHubSteps
     {
         private ChromeDriver _driver;
-
+        private string newRepoName;
         SignInPage signInPage => new SignInPage(_driver);
         HomePage homePage => new HomePage(_driver);
+        RepoCodePage repoCodePage => new RepoCodePage(_driver);
         NewRepositoryPage newRepositoryPage => new NewRepositoryPage(_driver);
 
         [BeforeScenario]
@@ -87,7 +89,7 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         [Then(@"Repository should be created")]
         public void ThenRepositoryShouldBeCreated()
         {
-            //
+            repoCodePage.AssertRepositoryCreated(newRepoName);
         }
 
 
@@ -95,11 +97,10 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         [When(@"Enter repository name as ""(.*)"" with key")]
         public void WhenEnterRepositoryNameAsWithKey(string p0)
         {
-            newRepositoryPage.EnterRepositoryName(p0);
+            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            int secondsSinceEpoch = (int)t.TotalSeconds;
+            newRepoName = p0 + secondsSinceEpoch.ToString();
+            newRepositoryPage.EnterRepositoryName(newRepoName);
         }
-
-
-
-
     }
 }

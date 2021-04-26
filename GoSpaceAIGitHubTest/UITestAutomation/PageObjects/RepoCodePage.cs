@@ -1,4 +1,5 @@
 ﻿using GoSpaceAIGitHubTest.Infrastructure;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -9,26 +10,20 @@ using System.Text;
 
 namespace GoSpaceAIGitHubTest.UITestAutomation.PageObjects
 {
-    class NewRepositoryPage
+    class RepoCodePage
     {
         ChromeDriver _driver;
 
-        public NewRepositoryPage(ChromeDriver driver)
+        public RepoCodePage(ChromeDriver driver)
         {
             _driver = driver;
         }
         private Utilities util => new Utilities(_driver);
 
        
-
-        internal void ClickCreateRepository()
+        internal void AssertRepositoryCreated(string repoName)
         {
-            util.ClickElement(By.XPath("//*[@id='new_repository']/div[4]/button"));
-        }
-
-        internal void EnterRepositoryName(string p0)
-        {
-            util.InputElementValue(By.Id("repository_name"),p0);
+            Assert.IsTrue(util.GetTextFromElement(By.XPath("//*[@id='js-repo-pjax-container']/div[1]/div[1]/div/h1/strong/a")).Equals(repoName));
         }
     }
 }

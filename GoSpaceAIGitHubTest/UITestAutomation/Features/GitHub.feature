@@ -15,6 +15,6 @@ Scenario: List repositories
 Scenario: Create repository
 	Given On home page
 	When Click new
-	When Enter repository name as "New Repo" with key
+	When Enter repository name as "NewRepo" with key
 	When Click create repository
 	Then Repository should be created

@@ -190,7 +190,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("Click new", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 18
- testRunner.When("Enter repository name as \"New Repo\" with key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("Enter repository name as \"NewRepo\" with key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 19
  testRunner.When("Click create repository", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
