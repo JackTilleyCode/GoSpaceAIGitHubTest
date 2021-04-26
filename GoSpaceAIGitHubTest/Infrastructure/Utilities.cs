@@ -30,6 +30,12 @@ namespace GoSpaceAIGitHubTest.Infrastructure
             Assert.IsTrue(_driver.FindElement(By.XPath("//*[contains(text(),'" + elementText + "')]")).Displayed);
         }
 
+        internal string GetTextFromElement(By by)
+        {
+            return _driver.FindElement(by).Text;
+        }
+
+
         internal void ClickElement(By by)
         {
             _driver.FindElement(by).Click();
