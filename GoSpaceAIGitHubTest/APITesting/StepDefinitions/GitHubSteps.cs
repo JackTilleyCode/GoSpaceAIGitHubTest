@@ -13,35 +13,55 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
     [Binding]
     public class GitHubSteps
     {
-        public static List<MyArray> repoList = new List<MyArray>();
-
+        static List<MyArray> repoList = new List<MyArray>();
+        static HttpClient client = new HttpClient();
+        static HttpResponseMessage response;
         [Given(@"Authenticated")]
         public void GivenAuthenticated()
         {
-            Task.WaitAll(ExecuteAsync());
-
-        }
-        
-        [Then(@"Request should return a list of repositories")]
-        public void ThenRequestShouldReturnAListOfRepositories()
-        {
-            Assert.IsNotEmpty(repoList[0].full_name);
-        }
-
-        public static async Task ExecuteAsync()
-        {
-            HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://api.github.com");
             var token = "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";
 
             client.DefaultRequestHeaders.UserAgent.Add(new System.Net.Http.Headers.ProductInfoHeaderValue("AppName", "1.0"));
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Token", token);
+        }
+        [When(@"Send request to get repos")]
+        public void WhenSendRequestToGetRepos()
+        {
+            Task.WaitAll(ExecuteGetReposAsync());
+        }
 
+
+        [Then(@"Repositories should be listed")]
+        public void ThenRequestShouldReturnAListOfRepositories()
+        {
+            Assert.IsNotEmpty(repoList[0].full_name);
+        }
+
+        public static async Task ExecuteGetReposAsync()
+        {
             var response = await client.GetStringAsync("/users/gospaceaiinterview/repos");
 
             repoList = JsonConvert.DeserializeObject<List<MyArray>>(response);
         }
+        public static async Task ExecuteDeleteRepoAsync()
+        {
+            response = await client.DeleteAsync("/repos/gospaceaiinterview/New-Repo1619475102");
+        }
+
+        [When(@"Send request to delete repo")]
+        public void WhenSendRequestToDeleteRepo()
+        {
+            Task.WaitAll(ExecuteDeleteRepoAsync());
+        }
+
+        [Then(@"Repo should be deleted")]
+        public void ThenRepoShouldBeDeleted()
+        {
+            Assert.IsTrue(response.IsSuccessStatusCode);
+        }
+
 
         public class Owner
         {
