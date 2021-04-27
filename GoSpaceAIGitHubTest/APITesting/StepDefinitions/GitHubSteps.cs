@@ -6,23 +6,26 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
 {
     [Binding]
     public class GitHubSteps
     {
+        public static List<MyArray> repoList = new List<MyArray>();
+
         [Given(@"Authenticated")]
         public void GivenAuthenticated()
         {
             Task.WaitAll(ExecuteAsync());
-            Console.ReadLine();
+
         }
         
         [Then(@"Request should return a list of repositories")]
         public void ThenRequestShouldReturnAListOfRepositories()
         {
-            ScenarioContext.Current.Pending();
+            Assert.IsNotEmpty(repoList[0].full_name);
         }
 
         public static async Task ExecuteAsync()
@@ -30,7 +33,6 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://api.github.com");
             var token = "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";
-            //var token = "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";
 
             client.DefaultRequestHeaders.UserAgent.Add(new System.Net.Http.Headers.ProductInfoHeaderValue("AppName", "1.0"));
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -38,7 +40,8 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
 
             var response = await client.GetStringAsync("/users/gospaceaiinterview/repos");
 
-            var myDeserializedClass = JsonConvert.DeserializeObject<List<MyArray>>(response);
+            repoList = JsonConvert.DeserializeObject<List<MyArray>>(response);
+        }
 
         public class Owner
         {
@@ -145,12 +148,6 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
             public int watchers { get; set; }
             public string default_branch { get; set; }
             public Permissions permissions { get; set; }
-        }
-
-        public class Root
-        {
-            public List<MyArray> MyArray { get; set; }
-        
         }
     }
 }

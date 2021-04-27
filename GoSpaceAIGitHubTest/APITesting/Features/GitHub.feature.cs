@@ -75,14 +75,12 @@ namespace GoSpaceAIGitHubTest.APITesting.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("List repos")]
-        [NUnit.Framework.CategoryAttribute("mytag")]
         public virtual void ListRepos()
         {
-            string[] tagsOfScenario = new string[] {
-                    "mytag"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("List repos", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 5
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -102,10 +100,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
+#line 5
  testRunner.Given("Authenticated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 7
+#line 6
  testRunner.Then("Request should return a list of repositories", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
