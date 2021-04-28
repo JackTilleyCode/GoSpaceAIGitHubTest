@@ -1,14 +1,4 @@
 # GoSpaceAIGitHubTest
-
-CONTENTS OF THIS FILE
----------------------
-
- * Introduction
- * Requirements
- * Recommended folders
- * Patterns
- * Data
- 
  
  INTRODUCTION
 ------------
