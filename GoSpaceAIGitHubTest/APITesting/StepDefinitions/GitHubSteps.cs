@@ -7,24 +7,32 @@ using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using NUnit.Framework;
+using System.Collections.Specialized;
+using Octokit;
+using System.Net.Http.Headers;
 
 namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
 {
     [Binding]
     public class GitHubSteps
     {
-        static List<MyArray> repoList = new List<MyArray>();
-        static HttpClient client = new HttpClient();
+        static List<MyArray> repoList;
+        static HttpClient client;
         static HttpResponseMessage response;
+        static string PAT = "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";
+        static string repoName = "PleaseHireMe";
+        static Octokit.Repository newRepository;
+        static GitHubClient gitClient;
+        
         [Given(@"Authenticated")]
         public void GivenAuthenticated()
         {
+            client = new HttpClient();
             client.BaseAddress = new Uri("https://api.github.com");
-            var token = "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";
 
             client.DefaultRequestHeaders.UserAgent.Add(new System.Net.Http.Headers.ProductInfoHeaderValue("AppName", "1.0"));
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Token", token);
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Token", PAT);
         }
         [When(@"Send request to get repos")]
         public void WhenSendRequestToGetRepos()
@@ -45,9 +53,40 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
 
             repoList = JsonConvert.DeserializeObject<List<MyArray>>(response);
         }
+
         public static async Task ExecuteDeleteRepoAsync()
         {
-            response = await client.DeleteAsync("/repos/gospaceaiinterview/New-Repo1619475102");
+            response = await client.DeleteAsync("/repos/gospaceaiinterview/"+repoName);
+        }
+
+        //Should have a standardized authentication for each test.
+        //Octokit was used as a workaround
+        public static async Task ExecuteCreateRepoAsync()
+        {
+            try
+            {
+                var repository = new NewRepository(repoName)
+                {
+                    AutoInit = false,
+                    Description = "",
+                    LicenseTemplate = "mit",
+                    Private = false
+                };
+                newRepository =  await gitClient.Repository.Create(repository);
+                Console.WriteLine($"The respository {repoName} was created.");
+            }
+            catch (AggregateException e)
+            {
+                Console.WriteLine($"E: For some reason, the repository {repoName}  can't be created. It may already exist. {e.Message}");
+            }
+
+        }
+        [Given(@"Authenticated using octokit")]
+        public void GivenAuthenticatedUsingOctokit()
+        {
+            var basicAuth = new Credentials(PAT);
+            gitClient = new GitHubClient(new Octokit.ProductHeaderValue("my-cool-app"));
+            gitClient.Credentials = basicAuth;
         }
 
         [When(@"Send request to delete repo")]
@@ -62,6 +101,30 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
 
+        [When(@"Send request to create repo")]
+        public void WhenSendRequestToCreateRepo()
+        {
+            Task.WaitAll(ExecuteCreateRepoAsync());
+        }
+
+        [Then(@"Repo should be created")]
+        public void ThenRepoShouldBeCreated()
+        {
+            Assert.IsTrue(newRepository.Name.Contains(repoName));
+        }
+
+        [AfterScenario]
+        public void Dispose()
+        {
+            client = null;
+            gitClient = null;
+            newRepository = null;
+        }
+
+        public class Repository
+        {
+            public string name;
+        }
 
         public class Owner
         {
