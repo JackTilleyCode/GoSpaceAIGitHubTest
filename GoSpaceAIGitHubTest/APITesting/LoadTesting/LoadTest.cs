@@ -51,7 +51,7 @@ namespace GoSpaceAIGitHubTest.APITesting.LoadTesting
                     TimeSpan timeTaken = timer.Elapsed;
                     Console.WriteLine("Time taken:" + timeTaken.TotalSeconds);
 
-                    await System.Threading.Tasks.Task.Delay(DELAY);
+                    await Task.Delay(DELAY);
                     foreach (var res in tasks)
                     {
                         if (res.Result.IsSuccessStatusCode)
