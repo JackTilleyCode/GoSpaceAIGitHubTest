@@ -10,7 +10,7 @@ namespace GoSpaceAIGitHubTest.APITesting.LoadTesting
     public class LoadTesting
     {
         [Test]
-        public void IsPrime_InputIs1_ReturnFalse()
+        public void LoadTest()
         {
             Task.WaitAll(ExecuteLoadTestAsync());
         }
