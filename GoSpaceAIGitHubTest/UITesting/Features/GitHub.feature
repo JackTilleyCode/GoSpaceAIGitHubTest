@@ -1,7 +1,7 @@
 ﻿Feature: GitHub
 	Github functions
 
-Scenario: User Sign In to github
+Scenario: Sign in
 	Given On sign in page
 	When Enter username as "GoSpaceAIInterview"
 	When Enter password as "GoSpace123"
@@ -10,6 +10,8 @@ Scenario: User Sign In to github
 
 Scenario: List repositories
 	Given On home page
+	When Click profile icon
+	When Click your repositories
 	Then User should have repositories
 
 Scenario: Create repository
