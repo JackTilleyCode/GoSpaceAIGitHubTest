@@ -26,16 +26,11 @@ namespace GoSpaceAIGitHubTest.Infrastructure
             _driver.FindElement(by).SendKeys(input);
             Debug.Print(TestContext.CurrentContext.Test + ":" + by.ToString() + " -> " + input);
         }
-        public void AssertElementPresent(string elementText)
-        {
-            Assert.IsTrue(_driver.FindElement(By.XPath("//*[contains(text(),'" + elementText + "')]")).Displayed);
-        }
 
         internal string GetTextFromElement(By by)
         {
             return _driver.FindElement(by).Text;
         }
-
 
         internal void ClickElement(By by)
         {
@@ -43,11 +38,6 @@ namespace GoSpaceAIGitHubTest.Infrastructure
             var clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(by));
             clickableElement.Click(); 
             Debug.Print(TestContext.CurrentContext.Test + ":" + by.ToString() + " -> Click");
-        }
-
-        internal void AssertElementNotPresent(string elementText)
-        {
-            Assert.IsTrue(_driver.FindElements(By.XPath("//*[contains(text(),'" + elementText + "')]")).Count == 0);
         }
     }
 }

@@ -6,6 +6,11 @@ Scenario: List repos
 	When Send request to get repos
 	Then Repositories should be listed
 
+Scenario: Check new repo exists
+	Given Authenticated
+	When Send request to get repos
+	Then New repo should exist
+
 Scenario: Create repo
 	Given Authenticated using octokit
 	When Send request to create repo
