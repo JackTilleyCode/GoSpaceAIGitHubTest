@@ -7,7 +7,7 @@ Scenario: List repos
 	Then Repositories should be listed
 
 Scenario: Create repo
-	Given Authenticated
+	Given Authenticated using octokit
 	When Send request to create repo
 	Then Repo should be created
 

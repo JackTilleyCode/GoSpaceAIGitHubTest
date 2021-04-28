@@ -22,9 +22,17 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
         static string PAT = "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";
         static string repoName = "PleaseHireMe";
         static Octokit.Repository newRepository;
+        static GitHubClient gitClient;
+        
         [Given(@"Authenticated")]
         public void GivenAuthenticated()
         {
+            client = new HttpClient();
+            client.BaseAddress = new Uri("https://api.github.com");
+
+            client.DefaultRequestHeaders.UserAgent.Add(new System.Net.Http.Headers.ProductInfoHeaderValue("AppName", "1.0"));
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Token", PAT);
         }
         [When(@"Send request to get repos")]
         public void WhenSendRequestToGetRepos()
@@ -50,12 +58,11 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
         {
             response = await client.DeleteAsync("/repos/gospaceaiinterview/"+repoName);
         }
+
+        //Should have a standardized authentication for each test.
+        //Octokit was used as a workaround
         public static async Task ExecuteCreateRepoAsync()
         {
-            var basicAuth = new Credentials(PAT);
-            var Client = new GitHubClient(new Octokit.ProductHeaderValue("my-cool-app"));
-            Client.Credentials = basicAuth;
-
             try
             {
                 var repository = new NewRepository(repoName)
@@ -65,7 +72,7 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
                     LicenseTemplate = "mit",
                     Private = false
                 };
-                newRepository =  await Client.Repository.Create(repository);
+                newRepository =  await gitClient.Repository.Create(repository);
                 Console.WriteLine($"The respository {repoName} was created.");
             }
             catch (AggregateException e)
@@ -73,6 +80,13 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
                 Console.WriteLine($"E: For some reason, the repository {repoName}  can't be created. It may already exist. {e.Message}");
             }
 
+        }
+        [Given(@"Authenticated using octokit")]
+        public void GivenAuthenticatedUsingOctokit()
+        {
+            var basicAuth = new Credentials(PAT);
+            gitClient = new GitHubClient(new Octokit.ProductHeaderValue("my-cool-app"));
+            gitClient.Credentials = basicAuth;
         }
 
         [When(@"Send request to delete repo")]
@@ -99,21 +113,12 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
             Assert.IsTrue(newRepository.Name.Contains(repoName));
         }
 
-        [BeforeScenario]
-        public void Init()
-        {
-            client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.github.com");
-
-            client.DefaultRequestHeaders.UserAgent.Add(new System.Net.Http.Headers.ProductInfoHeaderValue("AppName", "1.0"));
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Token", PAT);
-
-        }
         [AfterScenario]
         public void Dispose()
         {
             client = null;
+            gitClient = null;
+            newRepository = null;
         }
 
         public class Repository
