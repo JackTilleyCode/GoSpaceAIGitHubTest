@@ -10,8 +10,8 @@ The purpose of this project is to test Github via UI/API automated tests with ad
 TOOLSET REQUIREMENTS
 ------------
  * Visual Studio 2019
- * Extensions - Specflow - ( [For nstallation instructions click here!](https://docs.specflow.org/projects/specflow/en/latest/Installation/Installation.html) )
- * .Net Core 3.1 - [Insatllation](https://dotnet.microsoft.com/download/dotnet/3.1)
+ * Extensions - Specflow - ( [Installation instructions click here!](https://docs.specflow.org/projects/specflow/en/latest/Installation/Installation.html) )
+ * .Net Core 3.1 - [Installation](https://dotnet.microsoft.com/download/dotnet/3.1)
  * Selenium
  * NUnit Test Framework
 
