@@ -15,7 +15,7 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         HomePage homePage => new HomePage(_driver);
         RepoCodePage repoCodePage => new RepoCodePage(_driver);
         NewRepositoryPage newRepositoryPage => new NewRepositoryPage(_driver);
-
+        RepositoriesPage repositoriesPage => new RepositoriesPage(_driver);
         [BeforeScenario]
         public void Init()
         {
@@ -69,8 +69,7 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         [Then(@"User should have repositories")]
         public void ThenUserShouldHaveRepositories()
         {
-            homePage.ListRepositories();
-
+            repositoriesPage.ListRepositories();
         }
 
 
@@ -90,6 +89,17 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.StepDefinitions
         public void ThenRepositoryShouldBeCreated()
         {
             repoCodePage.AssertRepositoryCreated(newRepoName);
+        }
+        [When(@"Click profile icon")]
+        public void WhenClickProfileIcon()
+        {
+            homePage.ClickProfileIcon();
+        }
+
+        [When(@"Click your repositories")]
+        public void WhenClickYourRepositories()
+        {
+            homePage.ClickYourRepositories();
         }
 
 

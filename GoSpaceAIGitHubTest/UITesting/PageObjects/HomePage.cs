@@ -20,24 +20,6 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.PageObjects
         }
         private Utilities util => new Utilities(_driver);
 
-        internal void ListRepositories()
-        {
-            var elems = _driver.FindElements(By.XPath("//*[@id='repos-container']/ul/li/div/a/span[2]"));
-            Console.WriteLine("List of repositories:");
-            var refinedElems = elems.Where(x => x.Text.Length > 0);
-            if (refinedElems.Count() > 0)
-            {
-                foreach (var el in refinedElems)
-                {
-                    if (el.Text.Length > 0)
-                        Console.WriteLine(el.Text);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Empty");
-            }
-        }
 
         internal void AssertOnHomePage()
         {
@@ -47,6 +29,16 @@ namespace GoSpaceAIGitHubTest.UITestAutomation.PageObjects
         internal void ClickNew()
         {
             util.ClickElement(By.XPath("//*[@id='repos-container']/h2/a"));
+        }
+
+        internal void ClickProfileIcon()
+        {
+            util.ClickElement(By.XPath("/html/body/div[1]/header/div[7]/details/summary/img"));
+        }
+
+        internal void ClickYourRepositories()
+        {
+            util.ClickElement(By.XPath("/html/body/div[1]/header/div[7]/details/details-menu/a[2]"));
         }
     }
 }
