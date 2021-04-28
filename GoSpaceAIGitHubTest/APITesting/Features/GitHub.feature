@@ -11,7 +11,6 @@ Scenario: Create repo
 	When Send request to create repo
 	Then Repo should be created
 
-
 Scenario: Delete repo
 	Given Authenticated
 	When Send request to delete repo
