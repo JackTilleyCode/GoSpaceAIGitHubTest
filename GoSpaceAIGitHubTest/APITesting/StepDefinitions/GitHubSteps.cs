@@ -100,7 +100,24 @@ namespace GoSpaceAIGitHubTest.APITesting.StepDefinitions
         {
             Assert.IsTrue(response.IsSuccessStatusCode);
         }
-
+        [Then(@"New repo should exist")]
+        public void ThenNewRepoShouldExist()
+        {
+            Assert.IsTrue(isContainingNewRepo());
+        }
+        bool isContainingNewRepo()
+        {
+            foreach (var repo in repoList)
+            {
+                if (repo.full_name.Contains(repoName))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+           
+        }
         [When(@"Send request to create repo")]
         public void WhenSendRequestToCreateRepo()
         {
